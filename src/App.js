@@ -1,24 +1,20 @@
-import logo from './logo.svg';
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { Outlet, useNavigate } from "react-router-dom";
+
 import './App.css';
 
 function App() {
+  let navigate = useNavigate();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ display: "flex", height: "100%", flexDirection: "column" }}>
+      <AppBar position="static" sx={{height: "fit-content"}}>
+        <Toolbar sx={{ justifyContent: "center" }}>
+          <Typography sx={{marginRight: "auto"}}>Offline Investments</Typography>
+        </Toolbar>
+      </AppBar>
+      <Outlet />
+    </Box>
   );
 }
 
