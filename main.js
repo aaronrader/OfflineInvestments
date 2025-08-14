@@ -1,6 +1,6 @@
 // main.js
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const {app, BrowserWindow} = require("electron");
+const path = require("node:path");
 
 function createWindow() {
 
@@ -9,11 +9,12 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false,
+            contextIsolation: false
         },
     });
 
     win.loadURL('http://localhost:3000'); // URL of the React app
+    //win.loadFile('./public/index.html')
     win.maximize();
 }
 

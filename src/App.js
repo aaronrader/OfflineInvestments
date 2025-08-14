@@ -1,19 +1,21 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
-import { Outlet, useNavigate } from "react-router-dom";
-
 import './App.css';
+import { useEffect, useState } from "react";
+
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from 'react-router';
 
 function App() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ display: "flex", height: "100%", flexDirection: "column" }}>
       <AppBar position="static" sx={{height: "fit-content"}}>
         <Toolbar sx={{ justifyContent: "center" }}>
-          <Typography sx={{marginRight: "auto"}}>Offline Investments</Typography>
+          <Typography onClick={() => navigate("/")} sx={{marginRight: "auto"}}>Offline Investments</Typography>
         </Toolbar>
       </AppBar>
-      <Outlet />
+      <Outlet/>
     </Box>
   );
 }
