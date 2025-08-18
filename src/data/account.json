@@ -1,0 +1,39 @@
+{
+    "name" :"Main",
+    "ledger": {
+        "trades": [
+            {
+                "id": 1,
+                "dateTime": "2025-08-14T00:00:00",
+                "security": "FIE",
+                "quantity": 30,
+                "price": 8.86,
+                "fees": 9.95
+            },
+            {
+                "id": 2,
+                "dateTime": "2025-08-14T00:00:30",
+                "security": "FIE",
+                "quantity": 25,
+                "price": 8.81,
+                "fees": 0
+            },
+            {
+                "id": 3,
+                "dateTime": "2025-08-14T00:00:00",
+                "security": "XIU",
+                "quantity": 150,
+                "price": 41.21,
+                "fees": 0
+            },
+            {
+                "id": 4,
+                "dateTime": "2025-08-14T00:00:00",
+                "security": "AAPL",
+                "quantity": 75,
+                "price": 230.32,
+                "fees": 0
+            }
+        ]
+    }
+}

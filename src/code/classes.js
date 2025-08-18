@@ -11,8 +11,9 @@ class Ledger {
 
 class Trade {
     constructor(trade) {
+        this.id = trade.id;
         this.dateTime = new Date(trade.dateTime);
-        this.security = new Security(trade.security);
+        this.security = trade.security;
         this.quantity = trade.quantity;
         this.price = trade.price;
         this.fees = trade.fees;
@@ -34,7 +35,7 @@ class Account {
         if (!this.ledger) return holdings;
 
         this.ledger.trades.forEach((trade) => {
-            let existingHolding = holdings.find((holding) => holding.security.equals(trade.security));
+            let existingHolding = holdings.find((holding) => holding.security === trade.security);
             if (existingHolding) {
                 existingHolding.processTransaction(trade);
             }
@@ -48,7 +49,7 @@ class Account {
 
 class Holding {
     constructor(security, quantity, startingPrice) {
-        this.security = new Security(security);
+        this.security = security;
         this.quantity = quantity;
         this.bookCost = startingPrice;
     }
