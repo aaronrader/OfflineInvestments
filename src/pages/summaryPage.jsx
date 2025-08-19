@@ -28,7 +28,6 @@ export const SummaryPage = (props) => {
     }
 
     const addNewSecurity = (security) => {
-        console.log(security);
         dispatch(addSecurity(security));
         setSecurityModalOpen(false);
     }

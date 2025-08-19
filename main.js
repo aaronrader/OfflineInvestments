@@ -1,5 +1,5 @@
 // main.js
-const {app, BrowserWindow} = require("electron");
+const { app, BrowserWindow } = require("electron");
 const path = require("node:path");
 
 function createWindow() {
@@ -9,13 +9,13 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: true,
+            preload: path.join(__dirname, "preload.js")
         },
     });
 
-    //win.loadURL('http://localhost:3000'); // URL of the React app
-    win.loadFile(path.join(__dirname, 'build', 'index.html'));
-    //win.maximize();
+    win.loadURL('http://localhost:3000'); // URL of the React app
+    //win.loadFile(path.join(__dirname, 'build', 'index.html'));
 }
 
 app.whenReady().then(createWindow);

@@ -6,3 +6,8 @@ body {
 #root {
     height: 100%;
 }
+
+.table-cell-icon {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

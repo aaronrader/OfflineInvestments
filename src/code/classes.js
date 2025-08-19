@@ -7,6 +7,10 @@ class Ledger {
         this.trades.push(new Trade(trade));
         this.trades.sort((a, b) => a.dateTime - b.dateTime);
     }
+
+    delete(tradeId) {
+        this.trades = this.trades.filter((val) => val.id !== tradeId)
+    }
 }
 
 class Trade {
