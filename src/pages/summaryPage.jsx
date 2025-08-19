@@ -1,12 +1,13 @@
 import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
-import { Link, NavLink } from "react-router";
 
+import { NavLink } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
-import { TradeModal } from "../components/tradeModal";
 import { recordTrade } from "../code/accountSlice";
 import { addSecurity } from "../code/securitySlice";
+
+import { TradeModal } from "../components/tradeModal";
 import { SecurityModal } from "../components/securityModal";
 
 export const SummaryPage = (props) => {
@@ -27,6 +28,7 @@ export const SummaryPage = (props) => {
     }
 
     const addNewSecurity = (security) => {
+        console.log(security);
         dispatch(addSecurity(security));
         setSecurityModalOpen(false);
     }
@@ -57,7 +59,7 @@ export const SummaryPage = (props) => {
 
                             return (
                                 <TableRow key={security.ticket}>
-                                    <TableCell><Link to="/security" state={{ security: security.ticket }}>{security.ticket}</Link></TableCell>
+                                    <TableCell><NavLink to="/security" state={{ security: security.ticket }}>{security.ticket}</NavLink></TableCell>
                                     <TableCell>{holding.quantity}</TableCell>
                                     <TableCell>{currencyFormatter.format(holding.avgPrice)}</TableCell>
                                     <TableCell>{currencyFormatter.format(holding.bookCost)}</TableCell>

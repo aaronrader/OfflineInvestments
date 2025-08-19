@@ -1,6 +1,5 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Routes, Route, StaticRouter } from "react-router"
+import { Routes, Route, HashRouter } from "react-router"
 import { Provider } from 'react-redux';
 
 import "./index.css";
@@ -18,13 +17,13 @@ import store from "./code/store.js";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <StaticRouter>
+    <HashRouter>
       <Routes>
         <Route path='/' element={<App />}>
           <Route index element={<SummaryPage />} />
           <Route path="security" element={<SecurityPage />} />
         </Route>
       </Routes>
-    </StaticRouter>
+    </HashRouter>
   </Provider>
 );

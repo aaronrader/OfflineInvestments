@@ -81,11 +81,4 @@ class Security {
     }
 }
 
-const SecurityType = Object.freeze({
-    ETF: 0,
-    STOCK: 1,
-    BOND: 2,
-    GIC: 3
-});
-
-export { Account, Holding, Ledger, Trade, Security, SecurityType }
+export { Account, Holding, Ledger, Trade, Security }

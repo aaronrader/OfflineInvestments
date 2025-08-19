@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import data from "../data/securities.json";
-import { Security } from "./classes";
 
 export const securitySlice = createSlice({
     name: "securityList",

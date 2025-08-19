@@ -35,7 +35,7 @@ export const SecurityPage = (props) => {
     return (
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Typography variant="h3">{security.ticket}</Typography>
-            <Typography variant="h5">{security.longName}</Typography>
+            <Typography variant="h5">{security.longName} ({security.type})</Typography>
             <Typography variant="h5" onClick={() => setDialogOpen(true)}>{currencyFormatter.format(security.marketValue)}</Typography>
             <TableContainer component={Paper} sx={{ minWidth: "33%", maxWidth: "66%" }}>
                 <Table>
