@@ -7,7 +7,7 @@ export const PriceDialog = (props) => {
     return (
         <Dialog open={props.open}>
             <DialogTitle align="center">{props.security.ticket} Price Update</DialogTitle>
-            <FormControl sx={{marginX: 2}}>
+            <FormControl sx={{ marginX: 2 }}>
                 <InputLabel htmlFor="update-price-field">Cost</InputLabel>
                 <FilledInput
                     id="update-price-field"

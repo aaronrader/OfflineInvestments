@@ -3,11 +3,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocation } from "react-router";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { PriceDialog } from "../components/priceDialog";
 import { saveSecurityListToFile, updateMarketValue } from "../code/securitySlice";
-import { removeTrade, saveAccountToFile } from "../code/accountSlice";
+import { recordTrade, removeTrade, saveAccountToFile } from "../code/accountSlice";
+import { TradeModal } from "../components/tradeModal";
 
 export const SecurityPage = (props) => {
     const currencyFormatter = new Intl.NumberFormat("en-CA", {
@@ -19,26 +20,34 @@ export const SecurityPage = (props) => {
     const dispatch = useDispatch();
 
     const location = useLocation();
-    const ticket = location.state.security;
+    const security = securityList.find((sec) => sec.ticket === location.state.security);
 
-    const security = securityList.find((sec) => sec.ticket === ticket);
-    const trades = account.ledger.trades.filter((trade) => trade.security === security.ticket);
+    const trades = account.ledger.trades.filter((trade) => trade.security === security?.ticket);
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [tradeModalOpen, setTradeModalOpen] = useState(false);
+    const [tradeType, setTradeType] = useState("BUY");
+
+    const recordNewTrade = (trade) => {
+        dispatch(recordTrade(trade));
+        dispatch(saveAccountToFile())
+        setTradeModalOpen(false);
+    }
+    const deleteTrade = (trade) => {
+        if (window.confirm("Are you sure?")) {
+            dispatch(removeTrade(trade.id))
+            dispatch(saveAccountToFile())
+            window.location.reload(false);
+        }
+    }
 
     const updateValue = (newValue) => {
         dispatch(updateMarketValue({
             ...security,
-            marketValue: newValue
+            marketValue: Number.parseFloat(newValue)
         }))
         setDialogOpen(false);
         dispatch(saveSecurityListToFile())
-    }
-
-    const deleteTrade = (trade) => {
-        dispatch(removeTrade(trade.id))
-        dispatch(saveAccountToFile())
-        window.location.reload(false);
     }
 
     return (
@@ -46,10 +55,15 @@ export const SecurityPage = (props) => {
             <Typography variant="h3">{security.ticket}</Typography>
             <Typography variant="h5">{security.longName} ({security.type})</Typography>
             <Typography variant="h5" onClick={() => setDialogOpen(true)}>{currencyFormatter.format(security.marketValue)}</Typography>
+            <Box>
+                <Button variant="contained" sx={{ my: 1, mr: 1 }} onClick={() => { setTradeType("BUY"); setTradeModalOpen(true) }}>Buy</Button>
+                <Button variant="contained" sx={{ my: 1, ml: 1 }} onClick={() => { setTradeType("SELL"); setTradeModalOpen(true) }}>Sell</Button>
+            </Box>
             <TableContainer component={Paper} sx={{ minWidth: "33%", maxWidth: "66%" }}>
                 <Table size="small">
                     <TableHead>
                         <TableRow>
+                            <TableCell></TableCell>
                             <TableCell>Date</TableCell>
                             <TableCell>Qty</TableCell>
                             <TableCell>Price</TableCell>
@@ -61,12 +75,15 @@ export const SecurityPage = (props) => {
                     <TableBody>
                         {trades.map((trade) => (
                             <TableRow key={trade.id}>
+                                <TableCell>{trade.type}</TableCell>
                                 <TableCell>{trade.dateTime.toLocaleDateString()}</TableCell>
                                 <TableCell>{trade.quantity}</TableCell>
                                 <TableCell>{currencyFormatter.format(trade.price)}</TableCell>
                                 <TableCell>{currencyFormatter.format(trade.fees)}</TableCell>
                                 <TableCell>{currencyFormatter.format(trade.total)}</TableCell>
-                                <TableCell className="table-cell-icon"><IconButton variant="contained" size="small" onClick={() => deleteTrade(trade)}><DeleteIcon /></IconButton></TableCell>
+                                <TableCell className="table-cell-icon">
+                                    <IconButton variant="contained" size="small" onClick={() => deleteTrade(trade)}><DeleteIcon /></IconButton>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -74,6 +91,7 @@ export const SecurityPage = (props) => {
             </TableContainer>
 
             <PriceDialog security={security} open={dialogOpen} onSave={updateValue} />
+            <TradeModal open={tradeModalOpen} onClose={() => setTradeModalOpen(false)} type={tradeType} ticket={security.ticket} onSave={recordNewTrade} />
         </Box>
     )
 }
