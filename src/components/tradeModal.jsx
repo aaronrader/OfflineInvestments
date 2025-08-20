@@ -1,9 +1,8 @@
-import { Box, Button, FormControl, InputLabel, MenuItem, Modal, Paper, Select, TextField, Typography } from "@mui/material"
+import { Box, Button, Modal, Paper, TextField, Typography } from "@mui/material"
 import { useReducer } from "react";
 
 export const TradeModal = (props) => {
     const initialState = {
-        ticket: props.selectedTicket ?? props.tickets[0],
         quantity: "",
         price: "",
         fees: "",
@@ -35,7 +34,8 @@ export const TradeModal = (props) => {
         props.onSave({
             id: (Math.random() * 10000).toFixed(0),
             dateTime: Date.now(),
-            security: state.ticket,
+            type: props.type,
+            security: props.ticket,
             quantity: Number.parseInt(state.quantity),
             price: Number.parseFloat(state.price),
             fees: Number.parseFloat(state.fees)
@@ -46,20 +46,7 @@ export const TradeModal = (props) => {
         <Modal open={props.open} onClose={props.onClose} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
             <form>
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 4 }} component={Paper}>
-                    <Typography variant="h3" align="center">Record New Trade</Typography>
-                    <FormControl sx={{ my: 1, width: "10rem" }}>
-                        <InputLabel id="f-ticket-label">Ticket</InputLabel>
-                        <Select
-                            labelId="f-ticket-label"
-                            value={state.ticket}
-                            label="Ticket"
-                            onChange={(e) => setState({ ticket: e.target.value })}
-                        >
-                            {props.tickets.map((val) => (
-                                <MenuItem value={val}>{val}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <Typography variant="h3" align="center">{props.type === "BUY" ? "Buying" : "Selling"} {props.ticket}</Typography>
                     <TextField
                         label="Quantity"
                         sx={{ my: 1, width: "10rem" }}

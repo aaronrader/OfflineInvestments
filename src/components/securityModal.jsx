@@ -15,6 +15,7 @@ export const SecurityModal = (props) => {
 
     const valdiateState = () => {
         let error = false;
+        if (state.ticket.length < 1 || state.longName.length < 1) error = true;
         if (state.marketValue.length > 0 && isNaN(Number.parseFloat(state.marketValue))) error = true;
         setState({ error: error });
         return !error;
@@ -47,37 +48,41 @@ export const SecurityModal = (props) => {
                         sx={{ my: 1, width: "10rem" }}
                         value={state.ticket}
                         onChange={(e) => setState({ ticket: e.target.value })}
+                        error={state.error}
                         required
                     />
                     <TextField
                         label="Long Name"
-                        sx={{ my: 1, width: "10rem" }}
+                        fullWidth
+                        sx={{ my: 1 }}
                         value={state.longName}
                         onChange={(e) => setState({ longName: e.target.value })}
+                        error={state.error}
                         required
                     />
-                    <FormControl>
-                        <InputLabel htmlFor="f-security-type-select">Type</InputLabel>
-                        <Select
-                            labelId="f-security-type-select"
-                            label="Type"
-                            sx={{ my: 1, width: "10rem" }}
-                            value={state.type}
-                            onChange={(e) => setState({type: e.target.value})}
-                        >
-                            <MenuItem value="Stock">Stock</MenuItem>
-                            <MenuItem value="ETF">ETF</MenuItem>
-                            <MenuItem value="Bond">Bond</MenuItem>
-                            <MenuItem value="GIC">GIC</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField
-                        label="Market Price ($)"
-                        sx={{ my: 1, width: "10rem" }}
-                        value={state.marketValue}
-                        onChange={(e) => setState({ marketValue: e.target.value })}
-                        error={state.error}
-                    />
+                    <Box>
+                        <FormControl sx={{ my: 1, mr: 1, width: "10rem" }}>
+                            <InputLabel htmlFor="f-security-type-select">Type</InputLabel>
+                            <Select
+                                labelId="f-security-type-select"
+                                label="Type"
+                                value={state.type}
+                                onChange={(e) => setState({ type: e.target.value })}
+                            >
+                                <MenuItem value="Stock">Stock</MenuItem>
+                                <MenuItem value="ETF">ETF</MenuItem>
+                                <MenuItem value="Bond">Bond</MenuItem>
+                                <MenuItem value="GIC">GIC</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <TextField
+                            label="Market Price ($)"
+                            sx={{ my: 1, ml: 1, width: "10rem" }}
+                            value={state.marketValue}
+                            onChange={(e) => setState({ marketValue: e.target.value })}
+                            error={state.error}
+                        />
+                    </Box>
                     <Button
                         variant="contained"
                         type="submit"

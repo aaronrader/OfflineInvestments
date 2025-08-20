@@ -17,6 +17,7 @@ class Trade {
     constructor(trade) {
         this.id = trade.id;
         this.dateTime = new Date(trade.dateTime);
+        this.type = trade.type;
         this.security = trade.security;
         this.quantity = trade.quantity;
         this.price = trade.price;
@@ -67,8 +68,14 @@ class Holding {
     }
 
     processTransaction(trade) {
-        this.quantity += trade.quantity;
-        this.bookCost += trade.total;
+        if (trade.type === "BUY") {
+            this.bookCost += trade.total;
+            this.quantity += trade.quantity;
+        }
+        else {
+            this.bookCost -= (trade.quantity * this.avgPrice);
+            this.quantity -= trade.quantity;
+        }
     }
 }
 
