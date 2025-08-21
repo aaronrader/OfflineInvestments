@@ -17,8 +17,8 @@ function createWindow() {
         },
     });
 
-    win.loadURL('http://localhost:3000'); // URL of the React app
-    //win.loadFile(path.join(__dirname, 'build', 'index.html'));
+    //win.loadURL('http://localhost:3000'); // URL of the React app
+    win.loadFile(path.join(dirname(fileURLToPath(import.meta.url)), 'build', 'index.html'));
 }
 
 app.whenReady().then(createWindow);
