@@ -1,23 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-import { Account } from "./classes";
+import { createSlice, current } from "@reduxjs/toolkit";
+import { Account, Ledger } from "./classes.js";
 
 export const accountSlice = createSlice({
-    name: "account",
-    initialState: {value: new Account(JSON.parse(window.electron.readFile("./src/data/account.json")))},
+    name: "accounts",
+    initialState: {
+        selected: window.electron.readAccounts().length > 0 ? window.electron.readAccounts()[0] : null,
+        list: window.electron.readAccounts().map((val) => new Account(val))
+    },
     reducers: {
         recordTrade(state, action) {
-            state.value.ledger.post(action.payload);
+            current(state).selected.ledger.post(action.payload);
         },
         removeTrade(state, action) {
-            state.value.ledger.delete(action.payload);
+            current(state).selected.ledger.delete(action.payload);
+        },
+        setSelectedAccount(state, action) {
+            const existingAccount = current(state).list.find((a) => a.name === action.payload);
+            if (existingAccount != null) {
+                state.selected = existingAccount;
+            } else {
+                const newAccount = new Account({name: action.payload, ledger: new Ledger([])});
+                state.list.push(newAccount);
+                state.selected = newAccount;
+            }
         },
         saveAccountToFile(state) {
-            window.electron.writeFile("./src/data/account.json", JSON.stringify(state.value));
+            window.electron.writeAccount(current(state).selected.name.toLowerCase(), current(state).selected);
         }
     }
 });
 
-export const { recordTrade, removeTrade, saveAccountToFile } = accountSlice.actions;
+export const { recordTrade, removeTrade, setSelectedAccount, saveAccountToFile } = accountSlice.actions;
 
 export default accountSlice.reducer;

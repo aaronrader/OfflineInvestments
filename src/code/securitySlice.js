@@ -1,19 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const securitySlice = createSlice({
-    name: "securityList",
-    initialState: {value: JSON.parse(window.electron.readFile("./src/data/securities.json"))},
+    name: "securities",
+    initialState: {
+        list: window.electron.readSecurities()
+    },
     reducers: {
         addSecurity(state, action) {
-            if (state.value.find((val) => val.ticket === action.payload.ticket) === undefined) {
-                state.value.push(action.payload);
+            if (state.list.find((val) => val.ticket === action.payload.ticket) === undefined) {
+                state.list.push(action.payload);
             }
         },
         removeSecurity(state, action) {
-            state.value = state.value.filter((val) => val.ticket !== action.payload.ticket)
+            state.list = state.list.filter((val) => val.ticket !== action.payload.ticket)
         },
         updateMarketValue(state, action) {
-            state.value = state.value.map((security) => {
+            state.list = current(state).list.map((security) => {
                 if (security.ticket === action.payload.ticket)
                     return action.payload;
                 else
@@ -21,7 +23,7 @@ export const securitySlice = createSlice({
             })
         },
         saveSecurityListToFile(state) {
-            window.electron.writeFile("./src/data/securities.json", JSON.stringify(state.value));
+            window.electron.writeSecurities(current(state).list);
         }
     }
 });

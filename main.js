@@ -1,16 +1,19 @@
 // main.js
-const { app, BrowserWindow } = require("electron");
-const path = require("node:path");
+import { app, BrowserWindow } from "electron";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+import { dirname } from "node:path";
 
 function createWindow() {
 
     const win = new BrowserWindow({
         width: 1000,
         height: 800,
+        minWidth: 900,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
-            preload: path.join(__dirname, "preload.js")
+            preload: path.join(dirname(fileURLToPath(import.meta.url)), "preload.js")
         },
     });
 

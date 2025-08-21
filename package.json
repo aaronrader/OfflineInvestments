@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
+  "type": "module",
   "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.14.0",

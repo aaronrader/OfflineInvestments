@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import accountReducer from './accountSlice';
-import securityReducer from './securitySlice';
+import accountReducer from './accountSlice.js';
+import securityReducer from './securitySlice.js';
 
 export default configureStore({
     reducer: {

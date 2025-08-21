@@ -15,8 +15,8 @@ export const SummaryPage = (props) => {
         style: "currency",
         currency: "CAD"
     });
-    const account = useSelector(state => state.account.value);
-    const securityList = useSelector(state => state.securityList.value);
+    const account = useSelector(state => state.account.selected);
+    const securityList = useSelector(state => state.securityList.list);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -81,7 +81,7 @@ export const SummaryPage = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {account.holdings.map((holding) => {
+                        {account.holdings?.map((holding) => {
                             const security = securityList.find((val) => val.ticket === holding.security);
                             return (
                                 <TableRow key={security.ticket}>

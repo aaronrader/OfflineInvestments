@@ -15,8 +15,8 @@ export const SecurityPage = (props) => {
         style: "currency",
         currency: "CAD"
     });
-    const account = useSelector(state => state.account.value);
-    const securityList = useSelector(state => state.securityList.value);
+    const account = useSelector(state => state.account.selected);
+    const securityList = useSelector(state => state.securityList.list);
     const dispatch = useDispatch();
 
     const location = useLocation();
@@ -54,7 +54,7 @@ export const SecurityPage = (props) => {
         <Box sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Typography variant="h3">{security.ticket}</Typography>
             <Typography variant="h5">{security.longName} ({security.type})</Typography>
-            <Typography variant="h5" onClick={() => setDialogOpen(true)}>{currencyFormatter.format(security.marketValue)}</Typography>
+            <Typography variant="h5" sx={{ cursor: "pointer", p: 0.5, borderRadius: "5px", "&:hover": { boxShadow: "0px 0px 3px" } }} onClick={() => setDialogOpen(true)}>{currencyFormatter.format(security.marketValue)}</Typography>
             <Box>
                 <Button variant="contained" sx={{ my: 1, mr: 1 }} onClick={() => { setTradeType("BUY"); setTradeModalOpen(true) }}>Buy</Button>
                 <Button variant="contained" sx={{ my: 1, ml: 1 }} onClick={() => { setTradeType("SELL"); setTradeModalOpen(true) }}>Sell</Button>
@@ -90,7 +90,7 @@ export const SecurityPage = (props) => {
                 </Table>
             </TableContainer>
 
-            <PriceDialog security={security} open={dialogOpen} onSave={updateValue} />
+            <PriceDialog security={security} open={dialogOpen} onClose={() => setDialogOpen(false)} onSave={updateValue} />
             <TradeModal open={tradeModalOpen} onClose={() => setTradeModalOpen(false)} type={tradeType} ticket={security.ticket} onSave={recordNewTrade} />
         </Box>
     )
