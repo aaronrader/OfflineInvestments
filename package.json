@@ -1,5 +1,6 @@
 {
   "name": "offlineinvestments",
+  "productName": "Offline Investments",
   "author": "Aaron Rader",
   "description": "An offline application to keep track of trades.",
   "version": "0.1.0",
@@ -14,6 +15,7 @@
     "@mui/icons-material": "^7.3.1",
     "@mui/material": "^7.2.0",
     "@reduxjs/toolkit": "^2.8.2",
+    "electron-squirrel-startup": "^1.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
@@ -22,12 +24,14 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-react\" \"wait-on http://localhost:3000/ && npm run start-electron\"",
+    "start": "electron-forge start",
     "start-react": "react-scripts start",
     "start-electron": "electron .",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +52,14 @@
     ]
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.8.3",
+    "@electron-forge/maker-deb": "^7.8.3",
+    "@electron-forge/maker-rpm": "^7.8.3",
+    "@electron-forge/maker-squirrel": "^7.8.3",
+    "@electron-forge/maker-zip": "^7.8.3",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.8.3",
+    "@electron-forge/plugin-fuses": "^7.8.3",
+    "@electron/fuses": "^1.8.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
