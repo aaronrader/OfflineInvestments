@@ -33,6 +33,33 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "Offline Investments",
+        "asar": true,
+        "ignore": [
+          "^\\/public$",
+          "^\\/src$",
+          "^\\/node_modules$"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "platforms": [
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "win32"
+          ]
+        }
+      ]
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
