@@ -4,7 +4,7 @@ import { Account, Ledger } from "./classes.js";
 export const accountSlice = createSlice({
     name: "accounts",
     initialState: {
-        selected: window.electron.readAccounts().length > 0 ? window.electron.readAccounts()[0] : null,
+        selected: window.electron.readAccounts().length > 0 ? new Account(window.electron.readAccounts()[0]) : null,
         list: window.electron.readAccounts().map((val) => new Account(val))
     },
     reducers: {
