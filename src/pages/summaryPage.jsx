@@ -50,7 +50,7 @@ export const SummaryPage = (props) => {
     }, [state.ticketSearchValue, navigate])
 
     return (
-        <Box sx={{ maxHeight: "calc(100vh - 64px)", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box sx={{ maxHeight: "calc(100vh - 64px - 68.5px)", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Typography variant="h3">Summary of {account.name}</Typography>
             <Typography variant="h5">As of {new Date(Date.now()).toDateString()}</Typography>
             <Box display="flex">
@@ -67,7 +67,7 @@ export const SummaryPage = (props) => {
                 />
                 <Button variant="contained" size="small" sx={{ my: 2, ml: 1 }} onClick={() => setState({ securityModalOpen: true })}>Add</Button>
             </Box>
-            <TableContainer component={Paper} sx={{ minWidth: "550px", maxWidth: "66%", my: 5 }}>
+            <TableContainer component={Paper} sx={{ minWidth: "550px", maxWidth: "66%", mt: 5 }}>
                 <Table>
                     <TableHead>
                         <TableRow>

@@ -26,10 +26,15 @@ export const accountSlice = createSlice({
         },
         saveAccountToFile(state) {
             window.electron.writeAccount(current(state).selected.name.toLowerCase(), current(state).selected);
+        },
+        deleteAccountFile(state, action) {
+            window.electron.deleteAccount(action.payload);
+            state.list = window.electron.readAccounts().map((val) => new Account(val));
+            state.selected = window.electron.readAccounts().length > 0 ? new Account(window.electron.readAccounts()[0]) : null
         }
     }
 });
 
-export const { recordTrade, removeTrade, setSelectedAccount, saveAccountToFile } = accountSlice.actions;
+export const { recordTrade, removeTrade, setSelectedAccount, saveAccountToFile, deleteAccountFile } = accountSlice.actions;
 
 export default accountSlice.reducer;
