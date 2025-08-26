@@ -33,7 +33,7 @@ function App() {
   }, [accountList.length, dialogOpen])
 
   return (
-    <Box sx={{ display: "flex", height: "100%", flexDirection: "column" }}>
+    <Box sx={{ display: "flex", height: "100%", maxHeight: "100vh", flexDirection: "column" }}>
       <AppBar position="static" sx={{ height: "fit-content" }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography onClick={() => navigate("/")} sx={{ cursor: "pointer" }}>Offline Investments</Typography>

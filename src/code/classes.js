@@ -5,7 +5,7 @@ class Ledger {
 
     post(trade) {
         this.trades.push(new Trade(trade));
-        this.trades.sort((a, b) => a.dateTime - b.dateTime);
+        this.trades.sort((a, b) => b.dateTime - a.dateTime);
     }
 
     delete(tradeId) {
@@ -48,7 +48,7 @@ class Account {
                 holdings.push(new Holding(trade.security, trade.quantity, trade.total));
             }
         })
-        return holdings;
+        return holdings.toSorted((a, b) => a.security.localeCompare(b.security));
     }
 }
 

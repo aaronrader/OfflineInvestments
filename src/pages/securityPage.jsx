@@ -51,7 +51,7 @@ export const SecurityPage = (props) => {
     }
 
     return (
-        <Box sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box sx={{ maxHeight: "calc(100vh - 64px)", display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Typography variant="h3">{security.ticket}</Typography>
             <Typography variant="h5">{security.longName} ({security.type})</Typography>
             <Typography variant="h5" sx={{ cursor: "pointer", p: 0.5, borderRadius: "5px", "&:hover": { boxShadow: "0px 0px 3px" } }} onClick={() => setDialogOpen(true)}>{currencyFormatter.format(security.marketValue)}</Typography>
@@ -59,8 +59,8 @@ export const SecurityPage = (props) => {
                 <Button variant="contained" sx={{ my: 1, mr: 1 }} onClick={() => { setTradeType("BUY"); setTradeModalOpen(true) }}>Buy</Button>
                 <Button variant="contained" sx={{ my: 1, ml: 1 }} onClick={() => { setTradeType("SELL"); setTradeModalOpen(true) }}>Sell</Button>
             </Box>
-            <TableContainer component={Paper} sx={{ minWidth: "550px", maxWidth: "66%" }}>
-                <Table size="small">
+            <TableContainer component={Paper} sx={{ minWidth: "550px", maxWidth: "66%", my: 5 }}>
+                <Table size="small" stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
