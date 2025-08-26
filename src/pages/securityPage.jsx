@@ -59,7 +59,7 @@ export const SecurityPage = (props) => {
                 <Button variant="contained" sx={{ my: 1, mr: 1 }} onClick={() => { setTradeType("BUY"); setTradeModalOpen(true) }}>Buy</Button>
                 <Button variant="contained" sx={{ my: 1, ml: 1 }} onClick={() => { setTradeType("SELL"); setTradeModalOpen(true) }}>Sell</Button>
             </Box>
-            <TableContainer component={Paper} sx={{ minWidth: "33%", maxWidth: "66%" }}>
+            <TableContainer component={Paper} sx={{ minWidth: "550px", maxWidth: "66%" }}>
                 <Table size="small">
                     <TableHead>
                         <TableRow>

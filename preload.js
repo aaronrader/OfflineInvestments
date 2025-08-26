@@ -5,9 +5,11 @@ contextBridge.exposeInMainWorld(
     "electron",
     {
         readAccounts: () => {
-            if (!fs.existsSync(`./data/accounts/`)) {
+            if (!fs.existsSync(`./data/`)) {
                 fs.mkdirSync(`./data/`);
-                fs.mkdirSync(`./data/accounts/`);
+                if (!fs.existsSync(`./data/accounts/`)) {
+                    fs.mkdirSync(`./data/accounts/`);
+                }
             }
             return fs.readdirSync(`./data/accounts/`).map((fileName) => JSON.parse(fs.readFileSync(`./data/accounts/${fileName}`, "utf8")))
         },

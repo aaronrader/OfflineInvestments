@@ -34,13 +34,13 @@ export const SummaryPage = (props) => {
     const recordNewTrade = (trade) => {
         dispatch(recordTrade(trade));
         dispatch(saveAccountToFile());
-        setState({tradeModalOpen: false});
+        setState({ tradeModalOpen: false });
     }
 
     const addNewSecurity = (security) => {
         dispatch(addSecurity(security));
         dispatch(saveSecurityListToFile());
-        setState({securityModalOpen: false});
+        setState({ securityModalOpen: false });
     }
 
     useEffect(() => {
@@ -55,28 +55,28 @@ export const SummaryPage = (props) => {
             <Typography variant="h5">As of {new Date(Date.now()).toDateString()}</Typography>
             <Box display="flex">
                 <Autocomplete
-                    options={securityList.toSorted((a, b) => a.ticket.localeCompare(b.ticket)).map((s) => ({label: `(${s.ticket}) ${s.longName}`, ticket: s.ticket}))}
+                    options={securityList.toSorted((a, b) => a.ticket.localeCompare(b.ticket)).map((s) => ({ label: `(${s.ticket}) ${s.longName}`, ticket: s.ticket }))}
                     renderInput={(params) => <TextField {...params} label="Ticket" />}
-                    onChange={(e, val) => { 
-                        setState({ticketSearchValue: val.ticket});
+                    onChange={(e, val) => {
+                        setState({ ticketSearchValue: val.ticket });
                     }}
                     autoHighlight
                     clearOnBlur
                     clearOnEscape
                     sx={{ my: 1, mr: 1, width: "20rem" }}
                 />
-                <Button variant="contained" size="small" sx={{ my: 2, ml: 1 }} onClick={() => setState({securityModalOpen: true})}>Add</Button>
+                <Button variant="contained" size="small" sx={{ my: 2, ml: 1 }} onClick={() => setState({ securityModalOpen: true })}>Add</Button>
             </Box>
-            <TableContainer component={Paper} sx={{ minWidth: "33%", maxWidth: "66%" }}>
-                <Table size="">
+            <TableContainer component={Paper} sx={{ minWidth: "550px", maxWidth: "66%" }}>
+                <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Ticket</TableCell>
-                            <TableCell>Qty</TableCell>
-                            <TableCell>Avg Price</TableCell>
-                            <TableCell>Book Cost</TableCell>
-                            <TableCell>Market Cost</TableCell>
-                            <TableCell>Gain/Loss</TableCell>
+                            <TableCell sx={{ textAlign: "center" }}>Ticket</TableCell>
+                            <TableCell sx={{ textAlign: "center" }}>Qty</TableCell>
+                            <TableCell sx={{ textAlign: "center" }}>Avg Price</TableCell>
+                            <TableCell sx={{ textAlign: "center" }}>Book Cost</TableCell>
+                            <TableCell sx={{ textAlign: "center" }}>Market Cost</TableCell>
+                            <TableCell sx={{ textAlign: "center" }}>Gain/Loss</TableCell>
                             <TableCell />
                         </TableRow>
                     </TableHead>
@@ -92,8 +92,8 @@ export const SummaryPage = (props) => {
                                     <TableCell>{currencyFormatter.format(security.marketValue * holding.quantity ?? 0)}</TableCell>
                                     <TableCell>{currencyFormatter.format(security.marketValue * holding.quantity - holding.bookCost)}</TableCell>
                                     <TableCell sx={{ display: "flex", flexDirection: "column", p: 1 }}>
-                                        <Button variant="contained" size="small" sx={{ mb: 0.25, maxWidth: "50px" }} onClick={() => { setState({tradeType: "BUY", tradeModalOpen: true, security: security}) }}>Buy</Button>
-                                        <Button variant="contained" size="small" sx={{ mt: 0.25, maxWidth: "50px" }} onClick={() => { setState({tradeType: "SELL", tradeModalOpen: true, security: security}) }}>Sell</Button>
+                                        <Button variant="contained" size="small" sx={{ mb: 0.25, maxWidth: "50px" }} onClick={() => { setState({ tradeType: "BUY", tradeModalOpen: true, security: security }) }}>Buy</Button>
+                                        <Button variant="contained" size="small" sx={{ mt: 0.25, maxWidth: "50px" }} onClick={() => { setState({ tradeType: "SELL", tradeModalOpen: true, security: security }) }}>Sell</Button>
                                     </TableCell>
                                 </TableRow>
                             );
@@ -102,8 +102,8 @@ export const SummaryPage = (props) => {
                 </Table>
             </TableContainer>
 
-            <SecurityModal open={state.securityModalOpen} onClose={() => setState({securityModalOpen: false})} onSave={addNewSecurity} />
-            <TradeModal open={state.tradeModalOpen} onClose={() => setState({tradeModalOpen: false})} type={state.tradeType} ticket={state.security.ticket} onSave={recordNewTrade} />
+            <SecurityModal open={state.securityModalOpen} onClose={() => setState({ securityModalOpen: false })} onSave={addNewSecurity} />
+            <TradeModal open={state.tradeModalOpen} onClose={() => setState({ tradeModalOpen: false })} type={state.tradeType} ticket={state.security.ticket} onSave={recordNewTrade} />
         </Box>
     )
 }

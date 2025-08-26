@@ -42,7 +42,7 @@ export const SecurityModal = (props) => {
         <Modal open={props.open} onClose={props.onClose} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <form>
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 4 }} component={Paper}>
-                    <Typography variant="h3" align="center">Add New Security</Typography>
+                    <Typography variant="h4" align="center" mb={2}>Add New Security</Typography>
                     <TextField
                         label="Ticket"
                         sx={{ my: 1, width: "10rem" }}
