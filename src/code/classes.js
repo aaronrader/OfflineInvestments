@@ -39,13 +39,13 @@ class Account {
         let holdings = [];
         if (!this.ledger) return holdings;
 
-        this.ledger.trades.forEach((trade) => {
+        this.ledger.trades.toSorted((a, b) => a.dateTime - b.dateTime).forEach((trade) => {
             let existingHolding = holdings.find((holding) => holding.security === trade.security);
             if (existingHolding) {
                 existingHolding.processTransaction(trade);
             }
             else {
-                holdings.push(new Holding(trade.security, trade.quantity, trade.total));
+                holdings.push(new Holding(trade));
             }
         })
         return holdings.toSorted((a, b) => a.security.localeCompare(b.security));
@@ -53,10 +53,15 @@ class Account {
 }
 
 class Holding {
-    constructor(security, quantity, startingPrice) {
-        this.security = security;
-        this.quantity = quantity;
-        this.bookCost = startingPrice;
+    constructor(firstTrade) {
+        this.security = firstTrade.security;
+        if (firstTrade.type === "BUY") {
+            this.quantity = firstTrade.quantity;
+            this.bookCost = firstTrade.total;
+        } else {
+            this.quantity = -firstTrade.quantity;
+            this.bookCost = 0;
+        }
     }
 
     get avgPrice() {
@@ -79,17 +84,4 @@ class Holding {
     }
 }
 
-class Security {
-    constructor(security) {
-        this.ticket = security.ticket;
-        this.longName = security.longName;
-        this.type = security.type;
-        this.marketValue = security.marketValue;
-    }
-
-    equals(security) {
-        return this.ticket === security.ticket;
-    }
-}
-
-export { Account, Holding, Ledger, Trade, Security }
+export { Account, Holding, Ledger, Trade }

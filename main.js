@@ -52,8 +52,8 @@ function createWindow() {
         autoHideMenuBar: true,
     });
 
-    //win.loadURL('http://localhost:3000'); // URL of the React app
-    win.loadFile(path.join(dirname(fileURLToPath(import.meta.url)), 'build', 'index.html'));
+    win.loadURL('http://localhost:3000'); // URL of the React app
+    //win.loadFile(path.join(dirname(fileURLToPath(import.meta.url)), 'build', 'index.html'));
 }
 
 if (handleSquirrelEvent()) {

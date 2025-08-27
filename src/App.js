@@ -29,7 +29,12 @@ function App() {
   }
 
   const handleAccountDelete = () => {
-    if (window.confirm(`WARNING: This action cannot be undone. Are you sure you want to delete ${account?.name}?`)) { //js dialog contains a bug that locks up electron render process
+    /*
+      Electron contains a bug that locks up electron render process after using a native js dialog
+      - TODO: Replace native js dialog with MUI
+      - https://github.com/electron/electron/issues/31917
+    */
+    if (window.confirm(`WARNING: This action cannot be undone. Are you sure you want to delete ${account?.name}?`)) {
       const index = accountList.findIndex((val) => val.name.toLowerCase() === account?.name.toLowerCase());
       dispatch(deleteAccountFile(account?.name.toLowerCase()));
       if (index > 0) {
