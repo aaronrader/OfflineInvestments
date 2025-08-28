@@ -82,16 +82,20 @@ export const SummaryPage = (props) => {
                     </TableHead>
                     <TableBody>
                         {account.holdings?.map((holding) => {
-                            console.log(securityList);
                             const security = securityList.find((val) => val.ticket === holding.security);
                             return (
-                                <TableRow key={security.ticket}>
-                                    <TableCell><NavLink to="/security" state={{ security: security.ticket }}>{security.ticket}</NavLink></TableCell>
+                                <TableRow key={holding.security}>
+                                    <TableCell>
+                                        {security ? 
+                                            <NavLink to="/security" state={{ security: security?.ticket }}>{holding.security}</NavLink> :
+                                            <Typography fontSize={14}>{holding.security}</Typography>
+                                        }
+                                    </TableCell>
                                     <TableCell>{holding.quantity}</TableCell>
                                     <TableCell>{currencyFormatter.format(holding.avgPrice)}</TableCell>
                                     <TableCell>{currencyFormatter.format(holding.bookCost)}</TableCell>
-                                    <TableCell>{currencyFormatter.format(security.marketValue * holding.quantity ?? 0)}</TableCell>
-                                    <TableCell>{currencyFormatter.format(security.marketValue * holding.quantity - holding.bookCost)}</TableCell>
+                                    <TableCell>{currencyFormatter.format(security?.marketValue * holding.quantity ?? 0)}</TableCell>
+                                    <TableCell>{currencyFormatter.format(security?.marketValue * holding.quantity - holding.bookCost)}</TableCell>
                                     <TableCell sx={{ display: "flex", flexDirection: "column", p: 1 }}>
                                         <Button variant="contained" size="small" sx={{ mb: 0.25, maxWidth: "50px" }} onClick={() => { setState({ tradeType: "BUY", tradeModalOpen: true, security: security }) }}>Buy</Button>
                                         <Button variant="contained" size="small" sx={{ mt: 0.25, maxWidth: "50px" }} onClick={() => { setState({ tradeType: "SELL", tradeModalOpen: true, security: security }) }}>Sell</Button>
