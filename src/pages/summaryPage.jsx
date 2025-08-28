@@ -82,6 +82,7 @@ export const SummaryPage = (props) => {
                     </TableHead>
                     <TableBody>
                         {account.holdings?.map((holding) => {
+                            console.log(securityList);
                             const security = securityList.find((val) => val.ticket === holding.security);
                             return (
                                 <TableRow key={security.ticket}>

@@ -3,7 +3,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 export const securitySlice = createSlice({
     name: "securities",
     initialState: {
-        list: window.electron.readSecurities()
+        list: JSON.parse(window.electron.loadSecurities())
     },
     reducers: {
         addSecurity(state, action) {
@@ -23,7 +23,7 @@ export const securitySlice = createSlice({
             })
         },
         saveSecurityListToFile(state) {
-            window.electron.writeSecurities(current(state).list);
+            window.electron.saveSecurities(current(state).list);
         }
     }
 });

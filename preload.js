@@ -1,26 +1,14 @@
-import { contextBridge } from "electron";
-import fs from "node:fs"
+import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld(
     "electron",
     {
-        readAccounts: () => {
-            if (!fs.existsSync(`./data/`)) {
-                fs.mkdirSync(`./data/`);
-            }
-            if (!fs.existsSync(`./data/accounts/`)) {
-                fs.mkdirSync(`./data/accounts/`);
-            }
-            return fs.readdirSync(`./data/accounts/`).map((fileName) => JSON.parse(fs.readFileSync(`./data/accounts/${fileName}`, "utf8")))
-        },
-        readSecurities: () => {
-            if (!fs.existsSync(`./data/securities.json`)) {
-                fs.writeFileSync(`./data/securities.json`, JSON.stringify([]));
-            }
-            return JSON.parse(fs.readFileSync(`./data/securities.json`, "utf8"))
-        },
-        writeAccount: (name, data) => fs.writeFileSync(`./data/accounts/${name}.json`, JSON.stringify(data)),
-        deleteAccount: (name) => fs.rmSync(`./data/accounts/${name}.json`),
-        writeSecurities: (data) => fs.writeFileSync(`./data/securities.json`, JSON.stringify(data)),
+        loadAccountList: () => ipcRenderer.sendSync("read-all-accounts"),
+        loadAccount: (name) => ipcRenderer.sendSync("read-account", name),
+        saveAccount: (data) => ipcRenderer.sendSync("save-account", data),
+        deleteAccount: (name) => ipcRenderer.sendSync("delete-account", name),
+        
+        loadSecurities: () => ipcRenderer.sendSync("read-securities"),
+        saveSecurities: (data) => ipcRenderer.sendSync("save-securities", data)
     }
 )
