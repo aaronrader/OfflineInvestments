@@ -86,7 +86,7 @@ export const SummaryPage = (props) => {
                             return (
                                 <TableRow key={holding.security}>
                                     <TableCell>
-                                        {security ? 
+                                        {security ?
                                             <NavLink to="/security" state={{ security: security?.ticket }}>{holding.security}</NavLink> :
                                             <Typography fontSize={14}>{holding.security}</Typography>
                                         }
