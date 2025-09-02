@@ -16,6 +16,7 @@ function App() {
 
   const [newAccountName, setNewAccountName] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteDisabled, setDeleteDisabled] = useState(true);
 
   const handleAccountSelect = (e) => {
@@ -30,17 +31,10 @@ function App() {
   }
 
   const handleAccountDelete = () => {
-    /*
-      Electron contains a bug that locks up electron render process after using a native js dialog
-      - TODO: Replace native js dialog with MUI
-      - https://github.com/electron/electron/issues/31917
-    */
-    if (window.confirm(`WARNING: This action cannot be undone. Are you sure you want to delete ${account?.name}?`)) {
-      const index = accountList.findIndex((val) => val.toLowerCase() === account?.name.toLowerCase());
-      dispatch(deleteAccountFile(account?.name.toLowerCase()));
-      if (index > 0) {
-        dispatch(setSelectedAccount(accountList[index - 1]));
-      }
+    const index = accountList.findIndex((val) => val.toLowerCase() === account?.name.toLowerCase());
+    dispatch(deleteAccountFile(account?.name.toLowerCase()));
+    if (index > 0) {
+      dispatch(setSelectedAccount(accountList[index - 1]));
     }
   }
 
@@ -52,7 +46,7 @@ function App() {
     if (accountList.length < 1) {
       setDialogOpen(true);
       setDeleteDisabled(true);
-    } else 
+    } else
       setDeleteDisabled(false);
   }, [accountList]);
 
@@ -75,9 +69,10 @@ function App() {
         <Outlet />
       }
       <Box sx={{ display: "flex", p: 2, justifyContent: "center", alignItems: "flex-end", flexGrow: 1 }}>
-        <Button variant="contained" color='error' disabled={deleteDisabled} onClick={handleAccountDelete} sx={{ height: "fit-content" }}>Delete Account</Button>
+        <Button variant="contained" color='error' disabled={deleteDisabled} onClick={() => setDeleteDialogOpen(true)} sx={{ height: "fit-content" }}>Delete Account</Button>
       </Box>
 
+      {/* New Account Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle align='center'>New Account</DialogTitle>
         <DialogContent sx={{ p: 1 }}>
@@ -85,6 +80,18 @@ function App() {
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button variant='contained' onClick={handleAccountCreation}>Save</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Account Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle align='center'>This action cannot be undone.</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete {account?.name}?</Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <Button variant='contained' color='error' onClick={handleAccountDelete}>I'm Sure</Button>
+          <Button variant='contained' onClick={() => setDeleteDialogOpen(false)}>Nevermind</Button>
         </DialogActions>
       </Dialog>
     </Box>

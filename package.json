@@ -3,7 +3,7 @@
   "productName": "Offline Investments",
   "author": "Aaron Rader",
   "description": "An offline application to keep track of trades.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "main": "main.js",
   "type": "module",
