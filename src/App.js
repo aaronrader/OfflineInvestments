@@ -45,8 +45,8 @@ function App() {
   }
 
   useEffect(() => {
-    if (accountList.length === 1) {
-      dispatch(setSelectedAccount(accountList[0]));
+    if (accountList.length > 0) {
+      dispatch(setSelectedAccount(accountList[accountList.length - 1]));
     }
 
     if (accountList.length < 1) {
