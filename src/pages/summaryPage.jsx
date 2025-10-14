@@ -83,6 +83,7 @@ export const SummaryPage = (props) => {
                     <TableBody>
                         {account.holdings?.map((holding) => {
                             const security = securityList.find((val) => val.ticket === holding.security);
+                            const gainLoss = security?.marketValue * holding.quantity - holding.bookCost;
                             return (
                                 <TableRow key={holding.security}>
                                     <TableCell>
@@ -95,7 +96,7 @@ export const SummaryPage = (props) => {
                                     <TableCell>{currencyFormatter.format(holding.avgPrice)}</TableCell>
                                     <TableCell>{currencyFormatter.format(holding.bookCost)}</TableCell>
                                     <TableCell>{currencyFormatter.format(security?.marketValue * holding.quantity ?? 0)}</TableCell>
-                                    <TableCell>{currencyFormatter.format(security?.marketValue * holding.quantity - holding.bookCost)}</TableCell>
+                                    <TableCell sx={{color: (gainLoss > 0 ? "green" : "red")}}>{currencyFormatter.format(gainLoss)}</TableCell>
                                     <TableCell sx={{ display: "flex", flexDirection: "column", p: 1 }}>
                                         <Button variant="contained" size="small" sx={{ mb: 0.25, maxWidth: "50px" }} onClick={() => { setState({ tradeType: "BUY", tradeModalOpen: true, security: security }) }}>Buy</Button>
                                         <Button variant="contained" size="small" sx={{ mt: 0.25, maxWidth: "50px" }} onClick={() => { setState({ tradeType: "SELL", tradeModalOpen: true, security: security }) }}>Sell</Button>
